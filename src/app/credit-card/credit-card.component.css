@@ -1,0 +1,7 @@
+input[type="text" i] {
+  padding: 10px 8px !important;
+  width: 30% !important;
+}
+label{
+  font-size: 18px;
+}
