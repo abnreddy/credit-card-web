@@ -4,12 +4,13 @@ export default class Validation {
   static validate(controlName: string): ValidatorFn {
     return (controls: AbstractControl) => {
       let control = controls.get(controlName);
-       var regex = new RegExp("^[0-9]{16}$");
-          if (!regex.test(control?.value)){
+       var regex = new RegExp("^[0-9]{19}$");
+       let value = control?.value.replace(/\s/g, "")
+          if (!regex.test(value)){
                controls.get(controlName)?.setErrors({ matching: true });
                return controls;
              }
-          return luhnCheck(control?.value, controls, controlName);
+          return luhnCheck(value, controls, controlName);
     };
   }
 }

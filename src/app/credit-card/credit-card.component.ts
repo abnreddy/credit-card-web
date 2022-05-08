@@ -27,6 +27,8 @@ export class CreditCardComponent implements OnInit {
     constructor(public formBuilder: FormBuilder, public creditCardService: CreditCardService) {}
 
     ngOnInit() {
+      this.message = null;
+      this.retrieveAll()
       this.form = this.formBuilder.group(
         {
           name: ['', Validators.required],
@@ -43,26 +45,29 @@ export class CreditCardComponent implements OnInit {
         return this.form.controls;
     }
 
-      onReset(): void {
-        this.submitted = false;
-        this.form.reset();
-      }
+   onReset(): void {
+     this.submitted = false;
+     this.message = null
+     this.form.reset();
+   }
 
-rowData: any = [];
+ rowData: any = [];
 
 columnDefs = [
-             { field: 'name' },
-             { field: 'cardNumber' },
-             { field: 'balance' },
-             { field: 'cardLimit' }
+             { field: 'name', filter: true, width:300 },
+             { field: 'cardNumber', filter: true, width: 300 },
+             { field: 'balance', filter: true, },
+             { field: 'cardLimit', filter: true, }
          ];
 
 
 async onSubmit(): Promise<any> {
+     this.message = null;
      this.submitted = true;
      if (this.form.invalid) {
            return;
      }
+     this.form.value.cardNumber = this.form.value.cardNumber.replace(/\s/g, "")
      console.log(JSON.stringify(this.form.value, null, 2));
      console.log(JSON.stringify(this.creditCardModel));
      let result = await this.creditCardService.create(JSON.stringify(this.form.value))
@@ -72,11 +77,22 @@ async onSubmit(): Promise<any> {
  }
 
  async retrieveAll(): Promise<any> {
-      this.rowData = await this.creditCardService.getAll();
+      let results = await this.creditCardService.getAll();
+      if(results!==undefined){
+       results.forEach((data: CreditCardModel, index: any) => {
+        if(results!==undefined){
+             results[index].balance = "£" + data.balance
+             results[index].cardLimit = "£" + data.cardLimit
+             results[index].cardNumber = this.changeValue(data.cardNumber)
+         }
+       })
+      }
+      this.rowData = results
+
  }
 
- changeValue(){
-  return this.form.value.cardNumber.replace(/\d{4}(?=.)/g, '$& ');
+ changeValue(cardNumber: any) {
+  return cardNumber.toString().replace(/\d{4}(?=.)/g, '$& ');
  }
 
 }

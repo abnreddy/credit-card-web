@@ -4,7 +4,7 @@ import { CreditCardModel } from '../model/credit-card.model';
 import { Observable } from 'rxjs';
 
 
-const baseUrl = 'http://localhost:8080/api/card';
+const baseUrl = 'http://localhost:8080/api/credit-card';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class CreditCardService {
     }
 
   getAll() {
-      return this.http.get<CreditCardModel[]>(baseUrl+'/retrieve').toPromise();
+      return this.http.get<CreditCardModel[]>(baseUrl+'/get-all').toPromise();
   }
 
   get(id: any): Observable<CreditCardModel> {

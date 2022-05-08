@@ -8,12 +8,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
+import { CreditCardDirective } from './service/credit-card.directive';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreditCardComponent
+    CreditCardComponent,
+    CreditCardDirective
   ],
   imports: [
     BrowserModule,

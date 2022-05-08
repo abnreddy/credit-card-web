@@ -19,15 +19,13 @@
       <label>Card Number</label><br>
       <input
               type="text"
-              id="name"
-              (change)="changeValue()"
               formControlName="cardNumber"
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['cardNumber'].errors }"
-      />
+              credit-card />
       <div *ngIf="submitted && f['cardNumber'].errors" class="invalid-feedback">
         <div *ngIf="f['cardNumber'].errors['required']">Card Number is required</div>
-        <div *ngIf="f['cardNumber'].errors['matching']">Card Number is invalid, enter only numeric values and length 16</div>
+        <div *ngIf="f['cardNumber'].errors['matching']">Card Number is invalid, enter only numeric values and length 19</div>
       </div>
     </div><br>
     <div class="form-group">
@@ -53,7 +51,7 @@
       >
         Reset
       </button>
-    </div>
+    </div><br>
     <div *ngIf="this.message">
       {{this.message}}
     </div>
